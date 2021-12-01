@@ -1,15 +1,22 @@
 fun main() {
+    /**
+     * Given an [input] that is a list of ints, window them so that we have pairs of two and count
+     * the number of times there was an increase.
+     */
+    fun countIncreases(input: List<Int>): Int {
+        val steps = input.windowed(size = 2)
+
+        return steps.count { (first, second) ->
+            second > first
+        }
+    }
+
     fun part1(input: List<String>): Int {
         // Convert to numbers
         val inputNums = input.map { it.toInt() }
 
-        // Split into groups of two
-        val steps = inputNums.windowed(size = 2)
-
         // If the second number is bigger than the first, we have an increase.
-        return steps.count { (first, second) ->
-            second > first
-        }
+        return countIncreases(inputNums)
     }
 
     fun part2(input: List<String>): Int {
@@ -19,13 +26,8 @@ fun main() {
         // Split into groups of three, and get sums.
         val sums = inputNums.windowed(size = 3).map { it.sum() }
 
-        // Window sums
-        val steps = sums.windowed(size = 2)
-
         // If the second number is bigger than the first, we have an increase.
-        return steps.count { (first, second) ->
-            second > first
-        }
+        return countIncreases(sums)
     }
 
     // test if implementation meets criteria from the description, like:
